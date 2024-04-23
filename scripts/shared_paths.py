@@ -63,7 +63,7 @@ def find_ext_wildcard_paths():
 WILDCARD_EXT_PATHS = find_ext_wildcard_paths()
 
 # The path to the temporary files
-# In the webui root, on windows it exists by default, on linux it doesn't
+# In the wui root, on windows it exists by default, on linux it doesn't
 STATIC_TEMP_PATH = FILE_DIR.joinpath("tmp").absolute()
 TEMP_PATH = TAGS_PATH.joinpath("temp").absolute()  # Extension specific temp files
 

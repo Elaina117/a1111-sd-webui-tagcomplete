@@ -222,7 +222,7 @@ def get_embeddings(sd_model):
 
         results = sort_models(emb_v1) + sort_models(emb_v2) + sort_models(emb_vXL) + sort_models(emb_unknown)
     except AttributeError:
-        print("tag_autocomplete_helper: Old webui version or unrecognized model shape, using fallback for embedding completion.")
+        print("tag_autocomplete_helper: Old wui version or unrecognized model shape, using fallback for embedding completion.")
         # Get a list of all embeddings in the folder
         all_embeds = [str(e.relative_to(EMB_PATH)) for e in EMB_PATH.rglob("*") if e.suffix in {".bin", ".pt", ".png",'.webp', '.jxl', '.avif'} and e.is_file()]
         # Remove files with a size of 0
@@ -266,7 +266,7 @@ def _get_lora():
 
 def _get_lyco():
     """
-    Write a list of all LyCORIS/LOHA from https://github.com/KohakuBlueleaf/a1111-sd-webui-lycoris
+    Write a list of all LyCORIS/LOHA from https://github.com/KohakuBlueleaf/a1111-sd-wui-lycoris
     Fallback method for when the built-in Lora.networks module is not available.
     """
     # Get a list of all LyCORIS in the folder
@@ -338,7 +338,7 @@ def get_lora():
 
 
 def get_lyco():
-    """Write a list of all LyCORIS/LOHA from https://github.com/KohakuBlueleaf/a1111-sd-webui-lycoris"""
+    """Write a list of all LyCORIS/LOHA from https://github.com/KohakuBlueleaf/a1111-sd-wui-lycoris"""
     # Get hashes
     valid_lycos = _get_lyco()
     lycos_with_hash = []
@@ -500,7 +500,7 @@ write_temp_files()
 def on_ui_settings():
     TAC_SECTION = ("tac", "Tag Autocomplete")
 
-    # Backwards compatibility for pre 1.3.0 webui versions
+    # Backwards compatibility for pre 1.3.0 wui versions
     if not (hasattr(shared.OptionInfo, "info") and callable(getattr(shared.OptionInfo, "info"))):
         def info(self, info):
             self.label += f" ({info})"
@@ -527,7 +527,7 @@ def on_ui_settings():
         "tac_activeIn.txt2img": shared.OptionInfo(True, "Active in txt2img").needs_restart(),
         "tac_activeIn.img2img": shared.OptionInfo(True, "Active in img2img").needs_restart(),
         "tac_activeIn.negativePrompts": shared.OptionInfo(True, "Active in negative prompts").needs_restart(),
-        "tac_activeIn.thirdParty": shared.OptionInfo(True, "Active in third party textboxes").info("See <a href=\"https://github.com/DominikDoom/a1111-sd-webui-tagcomplete#-features\" target=\"_blank\">README</a> for supported extensions").needs_restart(),
+        "tac_activeIn.thirdParty": shared.OptionInfo(True, "Active in third party textboxes").info("See <a href=\"https://github.com/DominikDoom/a1111-sd-wui-tagcomplete#-features\" target=\"_blank\">README</a> for supported extensions").needs_restart(),
         "tac_activeIn.modelList": shared.OptionInfo("", "Black/Whitelist models").info("Model names [with file extension] or their hashes, separated by commas"),
         "tac_activeIn.modelListMode": shared.OptionInfo("Blacklist", "Mode to use for model list", gr.Dropdown, lambda: {"choices": ["Blacklist","Whitelist"]}),
         # Results related settings
@@ -545,11 +545,11 @@ def on_ui_settings():
         "tac_useHypernetworks": shared.OptionInfo(True, "Search for hypernetworks"),
         "tac_useLoras": shared.OptionInfo(True, "Search for Loras"),
         "tac_useLycos": shared.OptionInfo(True, "Search for LyCORIS/LoHa"),
-        "tac_useLoraPrefixForLycos": shared.OptionInfo(True, "Use the '<lora:' prefix instead of '<lyco:' for models in the LyCORIS folder").info("The lyco prefix is included for backwards compatibility and not used anymore by default. Disable this if you are on an old webui version without built-in lyco support."),
+        "tac_useLoraPrefixForLycos": shared.OptionInfo(True, "Use the '<lora:' prefix instead of '<lyco:' for models in the LyCORIS folder").info("The lyco prefix is included for backwards compatibility and not used anymore by default. Disable this if you are on an old wui version without built-in lyco support."),
         "tac_showWikiLinks": shared.OptionInfo(False, "Show '?' next to tags, linking to its Danbooru or e621 wiki page").info("Warning: This is an external site and very likely contains NSFW examples!"),
         "tac_showExtraNetworkPreviews": shared.OptionInfo(True, "Show preview thumbnails for extra networks if available"),
         "tac_modelSortOrder": shared.OptionInfo("Name", "Model sort order", gr.Dropdown, lambda: {"choices": list(sort_criteria.keys())}).info("Order for extra network models and wildcards in dropdown"),
-        "tac_useStyleVars": shared.OptionInfo(False, "Search for webui style names").info("Suggests style names from the webui dropdown with '$'. Currently requires a secondary extension like <a href=\"https://github.com/SirVeggie/extension-style-vars\" target=\"_blank\">style-vars</a> to actually apply the styles before generating."),
+        "tac_useStyleVars": shared.OptionInfo(False, "Search for wui style names").info("Suggests style names from the wui dropdown with '$'. Currently requires a secondary extension like <a href=\"https://github.com/SirVeggie/extension-style-vars\" target=\"_blank\">style-vars</a> to actually apply the styles before generating."),
         # Frequency sorting settings
         "tac_frequencySort": shared.OptionInfo(True, "Locally record tag usage and sort frequent tags higher").info("Will also work for extra networks, keeping the specified base order"),
         "tac_frequencyFunction": shared.OptionInfo("Logarithmic (weak)", "Function to use for frequency sorting", gr.Dropdown, lambda: {"choices": list(frequency_sort_functions.keys())}).info("; ".join([f'<b>{key}</b>: {val}' for key, val in frequency_sort_functions.items()])),

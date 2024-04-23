@@ -614,7 +614,7 @@ async function insertTextAtCursor(textArea, result, tagword, tabCompletedWithout
     if ([ResultType.wildcardFile, ResultType.yamlWildcard, ResultType.umiWildcard].includes(result.type))
         tacSelfTrigger = true;
     // Since we've modified a Gradio Textbox component manually, we need to simulate an `input` DOM event to ensure it's propagated back to python.
-    // Uses a built-in method from the webui's ui.js which also already accounts for event target
+    // Uses a built-in method from the wui's ui.js which also already accounts for event target
     if (tagType === ResultType.wildcardTag || tagType === ResultType.wildcardFile || tagType === ResultType.yamlWildcard)
         tacSelfTrigger = true;
     updateInput(textArea);
@@ -862,7 +862,7 @@ async function updateSelectionStyle(textArea, newIndex, oldIndex) {
     if (newIndex !== null) {
         let selectedResult = results[newIndex];
         let selectedType = selectedResult.type;
-        // These types support previews (others could technically too, but are not native to the webui gallery)
+        // These types support previews (others could technically too, but are not native to the wui gallery)
         let previewTypes = [ResultType.embedding, ResultType.hypernetwork, ResultType.lora, ResultType.lyco];
 
         let previewDiv = gradioApp().querySelector(`.autocompleteParent${textAreaId} .sideInfo`);
@@ -1424,7 +1424,7 @@ async function setup() {
     // Add event listener to apply settings button so we can mirror the changes to our internal config
     let applySettingsButton = gradioApp().querySelector("#tab_settings #settings_submit") || gradioApp().querySelector("#tab_settings > div > .gr-button-primary");
     applySettingsButton?.addEventListener("click", () => {
-        // Wait 500ms to make sure the settings have been applied to the webui opts object
+        // Wait 500ms to make sure the settings have been applied to the wui opts object
         setTimeout(async () => { 
             await syncOptions();
         }, 500);
@@ -1519,7 +1519,7 @@ onUiUpdate(async () => {
     tacLoading = true;
     // Get our tag base path from the temp file
     tagBasePath = await readFile(`tmp/tagAutocompletePath.txt`);
-    // Load config from webui opts
+    // Load config from wui opts
     await syncOptions();
     // Rest of setup
     setup();
